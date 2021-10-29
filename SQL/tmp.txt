@@ -1,0 +1,6 @@
+public List<ClsShippingDetail> getAllClsData();
+	public ClsShippingDetail findClsData(String shipping_transaction_id);
+	public void addClsData(ClsShippingDetail csd);
+	public void updateClsData(ClsShippingDetail csd);
+	public void deleteClsData(String shipping_transaction_id);
+	public void deleteAllRecords();
