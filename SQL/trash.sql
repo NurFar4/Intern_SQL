@@ -61,7 +61,7 @@ Insert into  [tmp_product]
 )
 Values
 (
-	NEXT VALUE FOR product_idseq, @product_name, @product_quantity, @product_unit_price, @created_at
+	NEXT VALUE FOR dbo.tmp_product_idseq, @product_name, @product_quantity, @product_unit_price, @created_at
 )
 go
 

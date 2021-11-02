@@ -1,6 +1,6 @@
-public List<ClsShippingDetail> getAllClsData();
-	public ClsShippingDetail findClsData(String shipping_transaction_id);
-	public void addClsData(ClsShippingDetail csd);
-	public void updateClsData(ClsShippingDetail csd);
-	public void deleteClsData(String shipping_transaction_id);
-	public void deleteAllRecords();
+DROP TABLE dbo.TShopeeShipmentStatus;
+
+CREATE TABLE dbo.TShopeeShipmentStatus(
+    shipment_status_id INT DEFAULT(NEXT VALUE FOR shipment_status_idseq) not null,
+    CONSTRAINT shipment_status_id_pk PRIMARY KEY(shipment_status_id)
+);
