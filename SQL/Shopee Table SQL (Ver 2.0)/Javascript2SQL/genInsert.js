@@ -1,7 +1,7 @@
 /**
  * Insert Procedure Name
- * @param {string} table_name 
- * @returns string
+ * @param {String} table_name 
+ * @returns {String}
  */
 function insertName(table_name) {
     return `NSP_${table_name}_Insert`;
@@ -10,7 +10,7 @@ function insertName(table_name) {
 /**
  * Generates String for Procedure parameters
  * @param {Array} arr 
- * @returns string
+ * @returns {String}
  */
 function paramArr(arr) {
     return arr.map(tmp_str => {
@@ -22,7 +22,7 @@ function paramArr(arr) {
 /**
  * Generates String for Procedure Statement
  * @param {Array} arr 
- * @returns string
+ * @returns {String}
  */
 function paramStmt(arr) {
     return arr.map(tmp_str => `[${tmp_str.split(" ")[0]}]`).join(", ");
@@ -30,9 +30,9 @@ function paramStmt(arr) {
 
 /**
  * Generates String for Procedure Values Statement
- * @param {string} pk_str 
- * @param {string} arr 
- * @returns string
+ * @param {String} pk_str 
+ * @param {String} arr 
+ * @returns {String}
  */
 function valArr(arr) {
     return arr.map(tmp_str => `@${tmp_str.split(" ")[0]}`).join(", ");
@@ -40,14 +40,13 @@ function valArr(arr) {
 
 /**
  * Insert Procedure
- * @param {string} table_name 
+ * @param {String} table_name 
  * @param {Array} arr 
- * @returns string
+ * @returns {String}
  */
 function insertProc(table_name, arr) {
     let pk_str = arr[0].split(" ")[0];
-    return `
-    If exists (Select * from sysobjects where ID = Object_id('${insertName(table_name)}') And OBJECTPROPERTY(id, N'IsProcedure') = 1)
+    return `If exists (Select * from sysobjects where ID = Object_id('${insertName(table_name)}') And OBJECTPROPERTY(id, N'IsProcedure') = 1)
     drop procedure ${insertName(table_name)}
     go
     Create Procedure ${insertName(table_name)}
@@ -60,6 +59,6 @@ function insertProc(table_name, arr) {
     go`;
 }
 
-module.exports = function(table_name, arr){
+module.exports = function (table_name, arr) {
     return insertProc(table_name, arr.slice(1));
 }

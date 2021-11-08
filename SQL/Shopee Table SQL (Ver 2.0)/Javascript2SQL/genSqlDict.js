@@ -1,7 +1,7 @@
 /**
  * Generates SQL Dictonary
- * @param {string} str 
- * @returns object
+ * @param {String} str 
+ * @returns {Object}
  */
 function table_dict(str) {
     /**
@@ -35,6 +35,6 @@ function table_dict(str) {
     return final_dict;
 }
 
-module.exports = function(str){
+module.exports = function (str) {
     return table_dict(str);
 }

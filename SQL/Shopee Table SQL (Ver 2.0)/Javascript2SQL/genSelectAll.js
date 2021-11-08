@@ -1,7 +1,7 @@
 /**
  * Select All Procedure Name
- * @param {string} table_name 
- * @returns string
+ * @param {String} table_name 
+ * @returns {String}
  */
 function selectAllName(table_name) {
     return `NSP_${table_name}_SelectAll`;
@@ -9,15 +9,14 @@ function selectAllName(table_name) {
 
 /**
  * Select All Primary Key Procedure
- * @param {string} table_name 
+ * @param {String} table_name 
  * @param {Array} arr 
- * @returns string
+ * @returns {String}
  */
 function selectAllProc(table_name, arr) {
     let pk_str = arr[0].split(" ")[0], data_type = arr[0].split(" ")[1];
 
-    return `
-    If exists (Select * from sysobjects where ID = Object_id('${selectAllName(table_name)}') And OBJECTPROPERTY(id, N'IsProcedure') = 1)
+    return `If exists (Select * from sysobjects where ID = Object_id('${selectAllName(table_name)}') And OBJECTPROPERTY(id, N'IsProcedure') = 1)
     drop procedure ${selectAllName(table_name)}
     go
     Create Procedure ${selectAllName(table_name)}
@@ -31,6 +30,6 @@ function selectAllProc(table_name, arr) {
     go`;
 }
 
-module.exports = function(table_name, arr){
+module.exports = function (table_name, arr) {
     return selectAllProc(table_name, arr);
 }

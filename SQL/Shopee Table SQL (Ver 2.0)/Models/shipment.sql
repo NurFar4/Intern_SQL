@@ -2,19 +2,17 @@
 DROP TABLE dbo.TShopeeShipment;
 
 CREATE TABLE dbo.TShopeeShipment(
-    shipment_id INT IDENTITY(1,1) not null,
+    shipment_id INT IDENTITY(1, 1) not null,
     start_location VARCHAR(max),
     destination VARCHAR(max),
     tracking_id VARCHAR(20),
-    status VARCHAR(max),
-    remark VARCHAR(max),
     created_date DATETIME,
-    created_by VARCHAR(100),
     expected_date DATETIME,
     due_date DATETIME,
     invoice_id INT,
     shipment_status_id INT,
     carrier_id INT,
+    detail_id INT,
     CONSTRAINT shipment_id_pk PRIMARY KEY (shipment_id)
 );
 
@@ -22,8 +20,9 @@ CREATE TABLE dbo.TShopeeShipment(
 DROP TABLE dbo.TShopeeCarrier;
 
 CREATE TABLE dbo.TShopeeCarrier(
-    carrier_id INT IDENTITY(1,1) not null,
+    carrier_id INT IDENTITY(1, 1) not null,
     name VARCHAR(20),
+    detail_id INT,
     CONSTRAINT carrier_id_pk PRIMARY KEY(carrier_id)
 );
 
@@ -31,7 +30,8 @@ CREATE TABLE dbo.TShopeeCarrier(
 DROP TABLE dbo.TShopeeShipmentStatus;
 
 CREATE TABLE dbo.TShopeeShipmentStatus(
-    shipment_status_id INT IDENTITY(1,1) not null,
+    shipment_status_id INT IDENTITY(1, 1) not null,
     name VARCHAR(20),
+    detail_id INT,
     CONSTRAINT shipment_status_id_pk PRIMARY KEY(shipment_status_id)
 );
