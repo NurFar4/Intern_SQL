@@ -1,15 +1,27 @@
 // Concat SQL Code into Javascript String
 
 const sql_js_dict = require("./genSqlStr");
+const sql_js_str = sql_js_dict["sql_str"];
 // const sql_js_str = `
-// -- Users Table
-// DROP TABLE dbo.TShopeeAdminUser;
+// -- Product Table
 
-// CREATE TABLE dbo.TShopeeAdminUser(
-//     admin_id INT IDENTITY(1, 1),
-//     username VARCHAR(max),
-//     password VARCHAR(max),
-//     CONSTRAINT admin_id_pk PRIMARY KEY(admin_id)
+// -- We don't use ID, when we can create new object in input
+// DROP TABLE dbo.TShopeeProduct;
+
+// CREATE TABLE dbo.TShopeeProduct(
+//     product_id INT IDENTITY(1, 1) not null,
+//     product_code VARCHAR(20),
+//     name VARCHAR(50),
+//     description VARCHAR(max),
+//     SKU VARCHAR(20),
+//     SKU2 VARCHAR(20),
+//     buy_price DECIMAL(10, 2),
+//     sell_price DECIMAL(10, 2),
+//     product_brand VARCHAR(50),
+//     product_type VARCHAR(50),
+//     product_variety VARCHAR(50),
+//     detail_id INT,
+//     CONSTRAINT product_id_pk PRIMARY KEY(product_id)
 // );
 // `;
 
@@ -24,31 +36,39 @@ const gen_update = require("./genUpdate");
 const gen_delete = require("./genDelete");
 
 // Declare Variables to be used
-const sql_js_str = sql_js_dict["sql_str"];
 const sql_dict = gen_sql_dict(sql_js_str);
-const func_arr = [gen_select_all, gen_select_by_pk, gen_insert, gen_update, gen_delete];
+// const func_arr = [gen_select_all, gen_select_by_pk, gen_insert, gen_update, gen_delete];
+const func_arr = [gen_insert, gen_update, gen_delete];
 const table_arr = sql_js_str.match(/CREATE TABLE (.|\n)+?\);/g);
-const comment_arr = ["Select All", "Select By PK", "Insert New Record", "Update Existing Record", "Delete Record"]
-    .map(x => `Stored Procedure: ${x}`);
+// const comment_arr = ["Select All", "Select By PK", "Insert New Record", "Update Existing Record", "Delete Record"]
+//     .map(x => `Stored Procedure: ${x}`);
+const comment_arr = ["Insert New Record", "Update Existing Record", "Delete Record"].map(x => `Stored Procedure: ${x}`);
+
+// Lambda
+f = x => {
+    return x.split("TShopee")[1].replace(/([a-z])([A-Z])/g, '$1 $2');;
+};
 
 for (let ind in Object.keys(sql_dict)) {
     let key = Object.keys(sql_dict)[ind];
     let table_stmt = table_arr[ind];
-    let table_name = key
-    let arr = sql_dict[key];
+    let table_name = key;
+    let arr = sql_dict[table_name];
 
-    console.log(table_stmt);
+    console.log(`DELETE FROM dbo.${table_name};`);
 
-    func_arr.forEach((func, ind) => {
+    // console.log(table_stmt);
 
-        // Comment Before Each procedure
-        console.log(`\n-- ${comment_arr[ind]}`)
+    // func_arr.forEach((func, ind) => {
 
-        let str = func(table_name, arr);
+    //     // Comment Before Each procedure
+    //     console.log(`\n-- ${comment_arr[ind]}`)
 
-        // Remove Tab Spaces
-        console.log(str.replace(/\n[ ]{4,}/g, "\n"));
-    });
+    //     let str = func(table_name, arr);
 
-    console.log();
+    //     // Remove Tab Spaces
+    //     console.log(str.replace(/\n[ ]{4,}/g, "\n"));
+    // });
+
+    // console.log();
 }

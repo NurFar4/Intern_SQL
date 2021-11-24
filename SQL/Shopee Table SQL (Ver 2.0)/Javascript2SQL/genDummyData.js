@@ -1,4 +1,5 @@
-const sql_js_str = require("./genSqlStr");
+const sql_js_dict = require("./genSqlStr");
+const sql_js_str = sql_js_dict["sql_str"];
 // const sql_js_str = `
 // DROP TABLE dbo.tmp_product;
 
@@ -68,7 +69,7 @@ function random_all(dateType) {
     if (dateType.toUpperCase().includes("INT"))
         return random_int();
     else if (dateType.toUpperCase().includes("VARCHAR"))
-        return `'${random_str()} ${random_str()} ${random_str()}'`;
+        return `'${random_str()}'`;
     else if (dateType.toUpperCase().includes("DECIMAL"))
         return random_decimal();
     else if (dateType.toUpperCase().includes("DATETIME"))
@@ -78,8 +79,8 @@ function random_all(dateType) {
 
 /**
  * Insert Procedure Name
- * @param {string} table_name 
- * @returns string
+ * @param {String} table_name 
+ * @returns {String}
  */
 function insertName(table_name) {
     return `NSP_${table_name}_Insert`;
@@ -94,12 +95,99 @@ function insertStmt(datatype_arr) {
     return datatype_arr.slice(1).map(prop => random_all(prop)).join(", ");
 }
 
-// 5. Loop Through SQL Dict
-for (let key in sql_dict) {
-    let table_name = key, table_prop = sql_dict[key], datatype_arr = table_prop.map(x => x.split(" ")[1]);
-    [...Array(5)].forEach(_ => {
-        console.log(`EXEC ${insertName(table_name)} ${insertStmt(datatype_arr)};`);
-    });
-    console.log();
+/**
+ * Returns a randomly shuffled Array [Implementation of Schwartzian transform](https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array)
+ * @param {Array} arr 
+ * @returns {Array}
+ */
+function random_shuffle(arr) {
+    return arr.map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
 }
 
+// // Loop Through SQL Dict
+// for (let key in sql_dict) {
+//     let table_name = key, table_prop = sql_dict[table_name], datatype_arr = table_prop.map(x => x.split(" ")[1]);
+//     [...Array(1)].forEach(_ => {
+//         console.log(`EXEC ${insertName(table_name)} ${insertStmt(datatype_arr)};`);
+//     });
+// }
+
+let table_name = "TShopeeProduct", table_prop = sql_dict[table_name], datatype_arr = table_prop.map(x => x.split(" ")[1]);
+table_prop.map(x => x.split(" ")[0]).forEach(datatype => {
+    console.log(`$("input[name='${datatype}']").val("");`);
+});
+
+// // Dummy Data => TShopeeProductionDetail
+
+// table_name = "TShopeeProductionDetail";
+
+// sword_type = ["Wooden", "Iron", "Steel", "Gold", "Diamond"];
+
+// arr = [];
+
+// for (let ind = 0; ind < 5; ind++) {
+//     let tmp_size = Math.random() * sword_type.length;
+//     for (let j = 0; j < tmp_size; j++) {
+//         let type = sword_type[j],
+//             tmp_arr = [
+//                 `'${type} Sword'`,
+//                 `'${random_datetime()}'`,
+//                 `'${random_datetime()}'`,
+//                 random_int(),
+//                 ind + 1,
+//                 `'Swo/${type.slice(0, 3)}'`
+//             ];
+//         arr.push(`EXEC ${insertName(table_name)} ${tmp_arr.join(", ")};`);
+//     }
+// }
+
+// // SQL Statements to Execute
+// console.log(`DELETE FROM ${table_name};`);
+// console.log(random_shuffle(arr).join("\n"));
+
+// // Dummy Data => TShopeeProduct
+
+// table_name = "TShopeeProduct";
+
+// table_name_2 = "TShopeeStockItem";
+
+// arr = [];
+
+// sword_variety = ["Wooden", "Iron", "Steel", "Gold", "Diamond"],
+//     sword_brand = ["ArctiBlade", "EvanAxe", "Shinyaxe"],
+//     product_type = "Sword";
+
+// for (let ind = 0; ind < sword_variety.length; ind++) {
+//     let type = product_type, variety = sword_variety[ind], brand = sword_brand[Math.floor(Math.random() * 3)];
+
+//     let tmp_arr = [
+//         `'${chance.integer({ min: 100000000, max: 999999999 })}'`,
+//         `'${type} ${variety}'`,
+//         `'A ${type} that is made out of ${variety}'`,
+//         `'${type.slice(0, 3)}/${variety.slice(0, 3)}'`,
+//         `'${type.slice(0, 3)}/${variety.slice(0, 3)}2'`,
+//         random_decimal(),
+//         random_decimal(),
+//         `'${brand}'`,
+//         `'${type}'`,
+//         `'${variety}'`
+//     ];
+
+//     arr.push(`EXEC ${insertName(table_name)} ${tmp_arr.join(", ")};`);
+
+//     let tmp_arr_2 = [
+//         `'${type} ${variety}'`,
+//         `'A ${type} that is made out of ${variety}'`,
+//         0,
+//         `'${type.slice(0, 3)}/${variety.slice(0, 3)}'`,
+//         1
+//     ]
+
+//     arr.push(`EXEC ${insertName(table_name_2)} ${tmp_arr_2.join(", ")};`);
+// }
+
+// console.log(`DELETE FROM ${table_name};`);
+// console.log(`DELETE FROM ${table_name_2};`)
+// console.log(random_shuffle(arr).join("\n"));

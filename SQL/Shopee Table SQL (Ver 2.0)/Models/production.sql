@@ -3,8 +3,9 @@ DROP TABLE dbo.TShopeeProduction;
 
 CREATE TABLE dbo.TShopeeProduction(
     production_id INT IDENTITY(1, 1) not null,
-    batch_no INT,
+    title VARCHAR(max),
     description VARCHAR(max),
+    status VARCHAR(20),
     detail_id INT,
     CONSTRAINT production_id_pk PRIMARY KEY(production_id)
 );
@@ -50,13 +51,15 @@ CREATE TABLE dbo.TShopeeStockItem(
     name VARCHAR(50),
     description VARCHAR(max),
     stock_quantity INT,
-    production_detail_id INT,
     product_id INT,
+    stock_warehouse_id INT,
     detail_id INT,
     CONSTRAINT stock_item_id_pk PRIMARY KEY(stock_item_id)
 );
 
 -- Product Table
+
+-- We don't use ID, when we can create new object in input
 DROP TABLE dbo.TShopeeProduct;
 
 CREATE TABLE dbo.TShopeeProduct(
@@ -68,9 +71,9 @@ CREATE TABLE dbo.TShopeeProduct(
     SKU2 VARCHAR(20),
     buy_price DECIMAL(10, 2),
     sell_price DECIMAL(10, 2),
-    brand_id INT,
-    type_id INT,
-    variety_id INT,
+    product_brand VARCHAR(50),
+    product_type VARCHAR(50),
+    product_variety VARCHAR(50),
     detail_id INT,
     CONSTRAINT product_id_pk PRIMARY KEY(product_id)
 );

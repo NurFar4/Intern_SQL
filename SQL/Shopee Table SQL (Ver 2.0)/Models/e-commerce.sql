@@ -5,7 +5,7 @@ CREATE TABLE dbo.TShopeePlatform(
     platform_id INT IDENTITY(1, 1) not null,
     name VARCHAR(50),
     detail_id INT,
-    CONSTRAINT platform_id_pk PRIMARY KEY(platform_id)
+	CONSTRAINT platform_id_pk PRIMARY KEY(platform_id)
 );
 
 -- Customer Table
@@ -24,8 +24,9 @@ CREATE TABLE dbo.TShopeeCustomer(
     state VARCHAR(50),
     zip_code INT,
     country VARCHAR(20),
+    platform_id INT,
     detail_id INT,
-    CONSTRAINT customer_id_pk PRIMARY KEY(customer_id)
+	CONSTRAINT customer_id_pk PRIMARY KEY(customer_id)
 );
 
 -- Order Table
@@ -35,11 +36,9 @@ CREATE TABLE dbo.TShopeeOrder(
     order_id INT IDENTITY(1, 1) not null,
     order_placed_date DATETIME,
     total_price DECIMAL(10, 2),
-    customer_id INT,
-    platform_id INT,
-    order_status_id INT,
+    order_status VARCHAR(50),
     detail_id INT,
-    CONSTRAINT order_id_pk PRIMARY KEY(order_id)
+	CONSTRAINT order_id_pk PRIMARY KEY(order_id)
 );
 
 -- Order Status Table
@@ -49,7 +48,7 @@ CREATE TABLE dbo.TShopeeOrderStatus(
     order_status_id INT IDENTITY(1, 1) not null,
     name VARCHAR(50),
     detail_id INT,
-    CONSTRAINT order_status_id_pk PRIMARY KEY(order_status_id)
+	CONSTRAINT order_status_id_pk PRIMARY KEY(order_status_id)
 );
 
 -- Order Item Table
@@ -63,10 +62,11 @@ CREATE TABLE dbo.TShopeeOrderItem(
     RMA_num INT,
     RMA_issued_by VARCHAR(50),
     RMA_issued_date DATETIME,
+    order_id INT,
     order_item_status_id INT,
     product_id INT,
     detail_id INT,
-    CONSTRAINT order_item_id_pk PRIMARY KEY(order_item_id)
+	CONSTRAINT order_item_id_pk PRIMARY KEY(order_item_id)
 );
 
 -- Order Item Status Table
@@ -78,7 +78,7 @@ CREATE TABLE dbo.TShopeeOrderItemStatus(
     description VARCHAR(max),
     return_merchandise_authorization_nr INT,
     detail_id INT,
-    CONSTRAINT order_item_status_id_pk PRIMARY KEY(order_item_status_id)
+	CONSTRAINT order_item_status_id_pk PRIMARY KEY(order_item_status_id)
 );
 
 -- Invoice Table
@@ -89,10 +89,10 @@ CREATE TABLE dbo.TShopeeInvoice(
     invoice_date DATETIME,
     invoice_details VARCHAR(max),
     shipping_fee DECIMAL(10, 2),
-    payment_method_id INT,
     invoice_status_id INT,
+    payment_method VARCHAR(50),
     detail_id INT,
-    CONSTRAINT invoice_id_pk PRIMARY KEY(invoice_id)
+	CONSTRAINT invoice_id_pk PRIMARY KEY(invoice_id)
 );
 
 -- Invoice Status Table
@@ -103,7 +103,7 @@ CREATE TABLE dbo.TShopeeInvoiceStatus(
     name VARCHAR(50),
     description VARCHAR(max),
     detail_id INT,
-    CONSTRAINT invoice_status_id_pk PRIMARY KEY(invoice_status_id)
+	CONSTRAINT invoice_status_id_pk PRIMARY KEY(invoice_status_id)
 );
 
 -- Payment Method Table
@@ -113,5 +113,5 @@ CREATE TABLE dbo.TShopeePaymentMethod(
     payment_method_id INT IDENTITY(1, 1) not null,
     name VARCHAR(50),
     detail_id INT,
-    CONSTRAINT payment_method_id_pk PRIMARY KEY(payment_method_id)
+	CONSTRAINT payment_method_id_pk PRIMARY KEY(payment_method_id)
 );
