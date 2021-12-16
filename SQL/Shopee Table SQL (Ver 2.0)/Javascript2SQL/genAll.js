@@ -62,20 +62,20 @@ for (let ind in Object.keys(sql_dict)) {
 
     // console.log(`DROP TABLE dbo.${table_name};`);
 
-    console.log(table_stmt);
+    // console.log(table_stmt);
 
-    func_arr.forEach((func, ind) => {
+    // func_arr.forEach((func, ind) => {
 
-        // Comment Before Each procedure
-        console.log(`\n-- ${comment_arr[ind]}`)
+    //     // Comment Before Each procedure
+    //     console.log(`\n-- ${comment_arr[ind]}`)
 
-        let str = func(table_name, arr);
+    //     let str = func(table_name, arr);
 
-        // Remove Tab Spaces
-        console.log(str.replace(/\n[ ]{4,}/g, "\n"));
-    });
+    //     // Remove Tab Spaces
+    //     console.log(str.replace(/\n[ ]{4,}/g, "\n"));
+    // });
 
-    console.log();
+    // console.log();
 
-    // console.log(`DELETE FROM dbo.${table_name};`);
+    console.log(`DELETE FROM dbo.${table_name};`);
 }

@@ -1,0 +1,26 @@
+<connectionStrings>
+    <add name="dbShopeeAutomationV2Entities" 
+        connectionString="metadata=res://*/Models.dbShopeeAutomationV2.csdl|res://*/Models.dbShopeeAutomationV2.ssdl| res://*/Models.dbShopeeAutomationV2.msl;
+            provider=System.Data.SqlClient;
+            provider connection string=&quot;
+                data source=IVD-LT-TANXIEN;
+                initial catalog=dbShopeeAutomationV2;
+                integrated security=True;
+                MultipleActiveResultSets=True;
+                App=EntityFramework
+            &quot;" 
+        providerName="System.Data.EntityClient" 
+    />
+    
+    <add name="dbShopeeAutomationV2Entities" 
+        connectionString="metadata=res://*/Models.dbShopeeAutomationV2.csdl|res://*/Models.dbShopeeAutomationV2.ssdl|res://*/Models.dbShopeeAutomationV2.msl; 
+            provider=System.Data.SqlClient;
+            provider connection string=&quot;
+                data source=47.254.234.86;
+                initial catalog=NTL_ERP;
+                persist security info=True;
+                user id=sa;password=Nomoneynotalk88!;
+                MultipleActiveResultSets=True;App=EntityFramework
+            &quot;" 
+        providerName="System.Data.EntityClient" />
+</connectionStrings>

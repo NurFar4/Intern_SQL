@@ -75,7 +75,6 @@ EXEC NSP_TShopeeDetail_Insert 'Product Model: Myvi 3rd Generation (M800), G,X,H,
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeProductModel_Insert 'Myvi 3rd Generation (M800), G,X,H,AV, 2018', @detail_id
 
-
 -- Product Category
 DECLARE @product_category_id INT;
 

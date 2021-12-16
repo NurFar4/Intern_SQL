@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const model_dir = __dirname + "/../../Shopee Table SQL (Ver 3.0)/Models";
+// const model_dir = __dirname + "/../../Shopee Table SQL (Ver 3.0)/Models";
+const model_dir = __dirname + "/../Models";
 
 /**
  * List all Files in Directory
@@ -22,9 +23,9 @@ function readFile(fileNameDir) {
 }
 
 // Stores all Data in SQL File and Concat into a very Large String
-// const final_str_arr = readDirArr(model_dir).map(fileName => readFile(model_dir + "/" + fileName));
+const final_str_arr = readDirArr(model_dir).map(fileName => readFile(model_dir + "/" + fileName));
 
-const final_str_arr = ["production.sql"].map(fileName => readFile(model_dir + "/" + fileName));
+// const final_str_arr = ["production.sql"].map(fileName => readFile(model_dir + "/" + fileName));
 // const final_str_arr = ["user.sql"].map(fileName => readFile(model_dir + "/" + fileName));
 
 const final_str = final_str_arr.join("\r\n")
