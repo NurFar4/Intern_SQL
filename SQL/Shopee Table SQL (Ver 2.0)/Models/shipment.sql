@@ -11,7 +11,7 @@ CREATE TABLE dbo.TShopeeShipment(
     due_date DATETIME,
     invoice_id INT,
     carrier_id INT,
-    shipment_status VARCHAR(20),
+    shipment_status_id INT,
     detail_id INT,
     CONSTRAINT shipment_id_pk PRIMARY KEY (shipment_id)
 );

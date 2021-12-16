@@ -33,10 +33,11 @@ CREATE TABLE dbo.TShopeeCustomer(
 DROP TABLE dbo.TShopeeOrder;
 
 CREATE TABLE dbo.TShopeeOrder(
-    order_id INT IDENTITY(1, 1) not null,
+    order_id INT IDENTITY(1,1) not null,
+    order_title VARCHAR(max),
     order_placed_date DATETIME,
-    total_price DECIMAL(10, 2),
-    order_status VARCHAR(50),
+    total_price DECIMAL(10,2),
+    order_status_id INT,
     detail_id INT,
 	CONSTRAINT order_id_pk PRIMARY KEY(order_id)
 );
@@ -82,15 +83,25 @@ CREATE TABLE dbo.TShopeeOrderItemStatus(
 );
 
 -- Invoice Table
+-- Created is when payment is complete
+-- Completed is when packing is complete
+-- Created Date will be auto generated
+-- Completed Date will be auto selected
+-- When an invoice is generated, it represents that customer already made payment
+-- Invoice Status is to signify that packing is complete for Production
 DROP TABLE dbo.TShopeeInvoice;
 
 CREATE TABLE dbo.TShopeeInvoice(
     invoice_id INT IDENTITY(1, 1) not null,
-    invoice_date DATETIME,
+    invoice_title VARCHAR(50),
+    invoice_created_date DATETIME,
+    invoice_completed_date DATETIME,
     invoice_details VARCHAR(max),
     shipping_fee DECIMAL(10, 2),
     invoice_status_id INT,
-    payment_method VARCHAR(50),
+    payment_method_id INT,
+    order_id INT,
+    customer_id INT,
     detail_id INT,
 	CONSTRAINT invoice_id_pk PRIMARY KEY(invoice_id)
 );
@@ -101,7 +112,6 @@ DROP TABLE dbo.TShopeeInvoiceStatus;
 CREATE TABLE dbo.TShopeeInvoiceStatus(
     invoice_status_id INT IDENTITY(1, 1) not null,
     name VARCHAR(50),
-    description VARCHAR(max),
     detail_id INT,
 	CONSTRAINT invoice_status_id_pk PRIMARY KEY(invoice_status_id)
 );

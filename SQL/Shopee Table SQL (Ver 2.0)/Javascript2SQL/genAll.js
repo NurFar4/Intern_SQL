@@ -3,25 +3,28 @@
 const sql_js_dict = require("./genSqlStr");
 const sql_js_str = sql_js_dict["sql_str"];
 // const sql_js_str = `
-// -- Product Table
+// -- Invoice Table
+// -- Created is when payment is complete
+// -- Completed is when packing is complete
+// -- Created Date will be auto generated`
+// -- Completed Date will be auto selected
+// -- When an invoice is generated, it represents that customer already made payment
+// -- Invoice Status is to signify that packing is complete for Production
+// DROP TABLE dbo.TShopeeInvoice;
 
-// -- We don't use ID, when we can create new object in input
-// DROP TABLE dbo.TShopeeProduct;
-
-// CREATE TABLE dbo.TShopeeProduct(
-//     product_id INT IDENTITY(1, 1) not null,
-//     product_code VARCHAR(20),
-//     name VARCHAR(50),
-//     description VARCHAR(max),
-//     SKU VARCHAR(20),
-//     SKU2 VARCHAR(20),
-//     buy_price DECIMAL(10, 2),
-//     sell_price DECIMAL(10, 2),
-//     product_brand VARCHAR(50),
-//     product_type VARCHAR(50),
-//     product_variety VARCHAR(50),
+// CREATE TABLE dbo.TShopeeInvoice(
+//     invoice_id INT IDENTITY(1,1) not null,
+//     invoice_title VARCHAR(50),
+//     invoice_created_date DATETIME,
+//     invoice_completed_date DATETIME,
+//     invoice_details VARCHAR(max),
+//     shipping_fee DECIMAL(10,2),
+//     invoice_status_id INT,
+//     payment_method_id INT,
+//     order_id INT,
+//     customer_id INT,
 //     detail_id INT,
-//     CONSTRAINT product_id_pk PRIMARY KEY(product_id)
+// 	CONSTRAINT invoice_id_pk PRIMARY KEY(invoice_id)
 // );
 // `;
 
@@ -55,20 +58,24 @@ for (let ind in Object.keys(sql_dict)) {
     let table_name = key;
     let arr = sql_dict[table_name];
 
-    console.log(`DELETE FROM dbo.${table_name};`);
+    // console.log(`${+ind + 1}. ${f(table_name)}`);
 
-    // console.log(table_stmt);
+    // console.log(`DROP TABLE dbo.${table_name};`);
 
-    // func_arr.forEach((func, ind) => {
+    console.log(table_stmt);
 
-    //     // Comment Before Each procedure
-    //     console.log(`\n-- ${comment_arr[ind]}`)
+    func_arr.forEach((func, ind) => {
 
-    //     let str = func(table_name, arr);
+        // Comment Before Each procedure
+        console.log(`\n-- ${comment_arr[ind]}`)
 
-    //     // Remove Tab Spaces
-    //     console.log(str.replace(/\n[ ]{4,}/g, "\n"));
-    // });
+        let str = func(table_name, arr);
 
-    // console.log();
+        // Remove Tab Spaces
+        console.log(str.replace(/\n[ ]{4,}/g, "\n"));
+    });
+
+    console.log();
+
+    // console.log(`DELETE FROM dbo.${table_name};`);
 }

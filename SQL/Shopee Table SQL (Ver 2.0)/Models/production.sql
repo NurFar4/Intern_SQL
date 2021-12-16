@@ -5,9 +5,19 @@ CREATE TABLE dbo.TShopeeProduction(
     production_id INT IDENTITY(1, 1) not null,
     title VARCHAR(max),
     description VARCHAR(max),
-    status VARCHAR(20),
+    production_status_id INT,
     detail_id INT,
     CONSTRAINT production_id_pk PRIMARY KEY(production_id)
+);
+
+-- Production Status
+DROP TABLE dbo.TShopeeProductionStatus;
+
+CREATE TABLE dbo.TShopeeProductionStatus(
+    production_status_id INT IDENTITY(1, 1) not null,
+    name VARCHAR(50),
+    detail_id INT,
+    CONSTRAINT production_status_id_pk PRIMARY KEY(production_status_id)
 );
 
 -- Production Detail Table
