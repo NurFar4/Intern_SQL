@@ -35,7 +35,8 @@ DROP TABLE dbo.TShopeeProductBrand;
 
 CREATE TABLE dbo.TShopeeProductBrand(
     product_brand_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
+    code VARCHAR(20),
     detail_id INT,
     CONSTRAINT product_brand_id_pk PRIMARY KEY(product_brand_id)
 );
@@ -45,7 +46,8 @@ DROP TABLE dbo.TShopeeProductCategory;
 
 CREATE TABLE dbo.TShopeeProductCategory(
     product_category_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
+    code VARCHAR(20),
     detail_id INT,
     CONSTRAINT product_category_id_pk PRIMARY KEY(product_category_id)
 );
@@ -55,7 +57,8 @@ DROP TABLE dbo.TShopeeProductType;
 
 CREATE TABLE dbo.TShopeeProductType(
     product_type_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
+    code VARCHAR(20),
     detail_id INT,
     CONSTRAINT product_type_id_pk PRIMARY KEY(product_type_id)
 );
@@ -65,7 +68,8 @@ DROP TABLE dbo.TShopeeProductModel;
 
 CREATE TABLE dbo.TShopeeProductModel(
     product_model_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
+    code VARCHAR(20),
     detail_id INT,
     CONSTRAINT product_model_id_pk PRIMARY KEY(product_model_id)
 );
@@ -75,7 +79,8 @@ DROP TABLE dbo.TShopeeProductVariety;
 
 CREATE TABLE dbo.TShopeeProductVariety(
     product_variety_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
+    code VARCHAR(20),
     detail_id INT,
     CONSTRAINT product_variety_id_pk PRIMARY KEY(product_variety_id)
 );
@@ -86,8 +91,11 @@ DROP TABLE dbo.TShopeeSupplier;
 CREATE TABLE dbo.TShopeeSupplier(
     supplier_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
-    code VARCHAR(10),
+    code VARCHAR(20),
     nation VARCHAR(20),
+    poc_name VARCHAR(max),
+    poc_email VARCHAR(max),
+    poc_phone_number VARCHAR(20),
     detail_id INT,
     CONSTRAINT supplier_id_pk PRIMARY KEY(supplier_id)
 );
@@ -115,11 +123,11 @@ DROP TABLE dbo.TShopeeProduct;
 
 CREATE TABLE dbo.TShopeeProduct(
     product_id INT IDENTITY(1, 1) not null,
-    product_code VARCHAR(20),
-    name VARCHAR(50),
+    product_code VARCHAR(50),
+    name VARCHAR(max),
     description VARCHAR(max),
-    SKU VARCHAR(20),
-    SKU2 VARCHAR(20),
+    SKU VARCHAR(50),
+    SKU2 VARCHAR(50),
     buy_price DECIMAL(10, 2),
     sell_price DECIMAL(10, 2),
     product_brand_id INT,
@@ -166,6 +174,8 @@ CREATE TABLE dbo.TShopeeProduction(
     production_id INT IDENTITY(1, 1) not null,
     title VARCHAR(max),
     description VARCHAR(max),
+    staff_name VARCHAR(max),
+    created_date DATETIME,
     total_usage DECIMAL(10, 6),
     production_status_id INT,
     detail_id INT,

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// const model_dir = __dirname + "/../../Shopee Table SQL (Ver 3.0)/Models";
-const model_dir = __dirname + "/../Models";
+const model_dir = __dirname + "/../../Shopee Table SQL (Ver 3.0)/Models";
+// const model_dir = __dirname + "/../Models";
 
 /**
  * List all Files in Directory

@@ -109,6 +109,18 @@ CREATE TABLE dbo.TShopeeSupplierShipment(
     CONSTRAINT supplier_shipment_id_pk PRIMARY KEY(supplier_shipment_id)
 );
 
+-- Product Components Table
+DROP TABLE dbo.TShopeeProductComponent;
+
+CREATE TABLE dbo.TShopeeProductComponent(
+    product_component_id INT IDENTITY(1, 1) not null,
+    master_product_id INT,
+    sub_product_id INT,
+    quantity INT,
+    detail_id INT,
+    CONSTRAINT product_component_id_pk PRIMARY KEY(product_component_id)
+);
+
 -- Product Table
 -- We don't use ID, when we can create new object in input
 DROP TABLE dbo.TShopeeProduct;
@@ -145,18 +157,6 @@ CREATE TABLE dbo.TShopeeProductStatus(
     name VARCHAR(max),
     detail_id INT,
     CONSTRAINT product_status_id_pk PRIMARY KEY(product_status_id)
-);
-
--- Product Components Table
-DROP TABLE dbo.TShopeeProductComponent;
-
-CREATE TABLE dbo.TShopeeProductComponent(
-    product_component_id INT IDENTITY(1, 1) not null,
-    master_product_id INT,
-    sub_product_id INT,
-    quantity INT,
-    detail_id INT,
-    CONSTRAINT product_component_id_pk PRIMARY KEY(product_component_id)
 );
 
 -- Production Table

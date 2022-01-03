@@ -44,7 +44,7 @@ function updateProc(table_name, arr) {
     as
     Update [${table_name}] 
     Set ${updateValArr(arr)}
-    Where 1=1
+    \nWhere 1=1
     And [${pk_str}] = @${pk_str}
     go`;
 }

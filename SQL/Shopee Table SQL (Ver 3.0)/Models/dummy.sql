@@ -3,6 +3,7 @@ DELETE FROM dbo.TShopeeStockItem;
 DELETE FROM dbo.TShopeeProductBrand;
 DELETE FROM dbo.TShopeeProductCategory;
 DELETE FROM dbo.TShopeeProductType;
+DELETE FROM dbo.TShopeeProductModel;
 DELETE FROM dbo.TShopeeProductVariety;
 DELETE FROM dbo.TShopeeSupplier;
 DELETE FROM dbo.TShopeeSupplierShipment;
@@ -17,10 +18,44 @@ DELETE FROM dbo.TShopeeDetail;
 DECLARE @dt datetime = GETDATE();
 DECLARE @detail_id INT;
 
+-- DEFAULT
+
 -- Stock Warehouse
 EXEC NSP_TShopeeDetail_Insert 'Stock Warehouse: VendLah! (HQ)', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeStockWarehouse_Insert 'VendLah! (HQ)', 'ivd.sales@dgb.com.my', '03-9078 3220', 'No 8 Jalan Serendah 26/41', 'Sekitar 26', 'Shah Alam', 'Selangor', 40400, 'Malaysia', @detail_id
+
+-- Product Status
+DECLARE @product_status_id INT;
+
+EXEC NSP_TShopeeDetail_Insert 'Product Status: In Use', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductStatus_Insert 'In Use', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Status: New', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductStatus_Insert 'New', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Status: In Stock', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductStatus_Insert 'In Stock', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Status: Empty', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductStatus_Insert 'Empty', @detail_id
+
+-- Production Status
+DECLARE @production_status_id INT;
+
+EXEC NSP_TShopeeDetail_Insert 'Production Status: Complete', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductionStatus_Insert 'Complete', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Production Status: Incomplete', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductionStatus_Insert 'Incomplete', @detail_id
+
+-- CHANGE PRODUCT VARIETY AND PRODUCT TYPE
 
 -- Supplier
 DECLARE @supplier_id INT;
@@ -48,33 +83,6 @@ EXEC NSP_TShopeeDetail_Insert 'Product Brand: NTL Asia', 'Created by default whe
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeProductBrand_Insert 'NTL Asia', @detail_id
 
--- Product Model
-DECLARE @product_model_id INT;
-
-EXEC NSP_TShopeeDetail_Insert 'Product Model: None', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductModel_Insert 'None', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Model: General', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductModel_Insert 'General', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Model: Axia (B200) G,E,Gxtra,SE,Advance,Style2014, 2017, 2019 Facelift', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductModel_Insert 'Axia (B200) G,E,Gxtra,SE,Advance,Style2014, 2017, 2019 Facelift', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Model: Myvi 1st Generation (M300), 2005', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductModel_Insert 'Myvi 1st Generation (M300), 2005', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Model: Myvi 2nd Generation (M600), Standard, 2011', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductModel_Insert 'Myvi 2nd Generation (M600), Standard, 2011', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Model: Myvi 3rd Generation (M800), G,X,H,AV, 2018', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductModel_Insert 'Myvi 3rd Generation (M800), G,X,H,AV, 2018', @detail_id
-
 -- Product Category
 DECLARE @product_category_id INT;
 
@@ -86,36 +94,9 @@ EXEC NSP_TShopeeDetail_Insert 'Product Category: PPF', 'Created by default when 
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeProductCategory_Insert 'PPF', @detail_id
 
--- Product Type
-DECLARE @product_type_id INT;
-
-EXEC NSP_TShopeeDetail_Insert 'Product Type: None', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductType_Insert 'None', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Type: Material', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductType_Insert 'Material', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Type: Side Mirror (Driver)', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductType_Insert 'Side Mirror (Driver)', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Type: Side Mirror (Passenger)', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductType_Insert 'Side Mirror (Passenger)', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Type: Petrol Cover', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductType_Insert 'Petrol Cover', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Type: Product Package', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductType_Insert 'Product Package', @detail_id
-
 -- Product Variety
 DECLARE @product_variety_id INT;
-
+ 
 EXEC NSP_TShopeeDetail_Insert 'Product Variety: Normal', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeProductVariety_Insert 'Normal', @detail_id
@@ -131,25 +112,6 @@ EXEC NSP_TShopeeProductVariety_Insert 'Gloss', @detail_id
 EXEC NSP_TShopeeDetail_Insert 'Product Variety: Chrome', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeProductVariety_Insert 'Chrome', @detail_id
-
--- Product Status
-DECLARE @product_status_id INT;
-
-EXEC NSP_TShopeeDetail_Insert 'Product Status: In Use', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductStatus_Insert 'In Use', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Status: New', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductStatus_Insert 'New', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Status: In Stock', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductStatus_Insert 'In Stock', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Status: Empty', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductStatus_Insert 'Empty', @detail_id
 
 -- Product (Material)
 DECLARE @product_id INT;
@@ -221,6 +183,60 @@ EXEC NSP_TShopeeSupplierShipment_Insert
 1.52, 1.8, 0,
 @supplier_id, @product_id, @detail_id
 
+-- Product Model
+DECLARE @product_model_id INT;
+
+EXEC NSP_TShopeeDetail_Insert 'Product Model: None', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductModel_Insert 'None', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Model: General', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductModel_Insert 'General', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Model: Axia (B200) G,E,Gxtra,SE,Advance,Style2014, 2017, 2019 Facelift', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductModel_Insert 'Axia (B200) G,E,Gxtra,SE,Advance,Style2014, 2017, 2019 Facelift', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Model: Myvi 1st Generation (M300), 2005', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductModel_Insert 'Myvi 1st Generation (M300), 2005', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Model: Myvi 2nd Generation (M600), Standard, 2011', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductModel_Insert 'Myvi 2nd Generation (M600), Standard, 2011', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Model: Myvi 3rd Generation (M800), G,X,H,AV, 2018', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductModel_Insert 'Myvi 3rd Generation (M800), G,X,H,AV, 2018', @detail_id
+
+-- Product Type
+DECLARE @product_type_id INT;
+
+EXEC NSP_TShopeeDetail_Insert 'Product Type: None', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductType_Insert 'None', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Type: Material', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductType_Insert 'Material', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Type: Side Mirror (Driver)', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductType_Insert 'Side Mirror (Driver)', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Type: Side Mirror (Passenger)', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductType_Insert 'Side Mirror (Passenger)', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Type: Petrol Cover', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductType_Insert 'Petrol Cover', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Type: Product Package', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductType_Insert 'Product Package', @detail_id
+
 -- Product (Product Component)
 EXEC NSP_TShopeeDetail_Insert 'Product: Myvi 1st Generation (M300), 2005 : Petrol Cover', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
 SET @product_brand_id = (SELECT product_brand_id FROM dbo.TShopeeProductBrand WHERE name = 'NTL Asia')
@@ -285,17 +301,6 @@ SET @master_product_id = (SELECT product_id FROM dbo.TShopeeProduct WHERE SKU = 
 SET @sub_product_id = (SELECT product_id FROM dbo.TShopeeProduct WHERE SKU = 'CM 01')
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeProductComponent_Insert @master_product_id, @sub_product_id, 1, @detail_id
-
--- Production Status
-DECLARE @production_status_id INT;
-
-EXEC NSP_TShopeeDetail_Insert 'Production Status: Complete', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductionStatus_Insert 'Complete', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Production Status: Incomplete', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductionStatus_Insert 'Incomplete', @detail_id
 
 -- Production
 DECLARE @production_id INT;
