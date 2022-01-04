@@ -3,7 +3,7 @@ DROP TABLE dbo.TShopeeStockWarehouse;
 
 CREATE TABLE dbo.TShopeeStockWarehouse(
     stock_warehouse_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
     email_address VARCHAR(50),
     phone_number VARCHAR(20),
     address_line_1 VARCHAR(50),
@@ -21,7 +21,7 @@ DROP TABLE dbo.TShopeeStockItem;
 
 CREATE TABLE dbo.TShopeeStockItem(
     stock_item_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
     description VARCHAR(max),
     stock_quantity DECIMAL(10, 6),
     product_id INT,
@@ -210,18 +210,4 @@ CREATE TABLE dbo.TShopeeProductionDetail(
     product_id INT,
     detail_id INT,
     CONSTRAINT production_detail_id_pk PRIMARY KEY(production_detail_id)
-);
-
--- Detail Table
-DROP TABLE dbo.TShopeeDetail;
-
-CREATE TABLE dbo.TShopeeDetail(
-    detail_id INT IDENTITY(1, 1) not null,
-    status VARCHAR(max),
-    remark VARCHAR(max),
-    created_by VARCHAR(100),
-    created_date DATETIME,
-    last_updated_by VARCHAR(100),
-    last_updated_date DATETIME,
-    CONSTRAINT detail_id_pk PRIMARY KEY(detail_id)
 );

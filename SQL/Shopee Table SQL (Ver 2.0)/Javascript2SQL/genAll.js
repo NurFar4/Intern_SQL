@@ -1,29 +1,29 @@
 // Concat SQL Code into Javascript String
 
 const sql_js_dict = require("./genSqlStr");
-// const sql_js_str = sql_js_dict["sql_str"];
-const sql_js_str = `
-DROP TABLE dbo.TShopeeProduct;
+const sql_js_str = sql_js_dict["sql_str"];
+// const sql_js_str = `
+// DROP TABLE dbo.TShopeeProduct;
 
-CREATE TABLE dbo.TShopeeProduct(
-    product_id INT IDENTITY(1,1) not null,
-    product_code VARCHAR(50),
-    name VARCHAR(max),
-    description VARCHAR(max),
-    SKU VARCHAR(50),
-    SKU2 VARCHAR(50),
-    buy_price DECIMAL(10,2),
-    sell_price DECIMAL(10,2),
-    product_brand_id INT,
-    product_model_id INT,
-    product_category_id INT,
-    product_type_id INT,
-    product_variety_id INT,
-    product_status_id INT,
-    detail_id INT,
-    CONSTRAINT product_id_pk PRIMARY KEY(product_id)
-);
-`;
+// CREATE TABLE dbo.TShopeeProduct(
+//     product_id INT IDENTITY(1,1) not null,
+//     product_code VARCHAR(50),
+//     name VARCHAR(max),
+//     description VARCHAR(max),
+//     SKU VARCHAR(50),
+//     SKU2 VARCHAR(50),
+//     buy_price DECIMAL(10,2),
+//     sell_price DECIMAL(10,2),
+//     product_brand_id INT,
+//     product_model_id INT,
+//     product_category_id INT,
+//     product_type_id INT,
+//     product_variety_id INT,
+//     product_status_id INT,
+//     detail_id INT,
+//     CONSTRAINT product_id_pk PRIMARY KEY(product_id)
+// );
+// `;
 
 // Generate Dictionary
 const gen_sql_dict = require("./genSqlDict");
@@ -56,8 +56,6 @@ for (let ind in Object.keys(sql_dict)) {
     let arr = sql_dict[table_name];
 
     // console.log(`${+ind + 1}. ${f(table_name)}`);
-
-    console.log(`DROP TABLE dbo.${table_name};`);
 
     console.log(table_stmt);
 
