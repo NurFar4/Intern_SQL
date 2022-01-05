@@ -3,7 +3,7 @@ DROP TABLE dbo.TShopeePlatform;
 
 CREATE TABLE dbo.TShopeePlatform(
     platform_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(100),
     detail_id INT,
 	CONSTRAINT platform_id_pk PRIMARY KEY(platform_id)
 );
@@ -13,8 +13,8 @@ DROP TABLE dbo.TShopeeCustomer;
 
 CREATE TABLE dbo.TShopeeCustomer(
     customer_id INT IDENTITY(1, 1) not null,
-    first_name VARCHAR(20),
-    last_name VARCHAR(20),
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
     dob DATETIME,
     email_address VARCHAR(20),
     phone_number VARCHAR(20),
@@ -47,7 +47,7 @@ DROP TABLE dbo.TShopeeOrderStatus;
 
 CREATE TABLE dbo.TShopeeOrderStatus(
     order_status_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(100),
     detail_id INT,
 	CONSTRAINT order_status_id_pk PRIMARY KEY(order_status_id)
 );
@@ -75,7 +75,7 @@ DROP TABLE dbo.TShopeeOrderItemStatus;
 
 CREATE TABLE dbo.TShopeeOrderItemStatus(
     order_item_status_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(100),
     description VARCHAR(max),
     return_merchandise_authorization_nr INT,
     detail_id INT,
@@ -93,7 +93,7 @@ DROP TABLE dbo.TShopeeInvoice;
 
 CREATE TABLE dbo.TShopeeInvoice(
     invoice_id INT IDENTITY(1, 1) not null,
-    invoice_title VARCHAR(50),
+    invoice_title VARCHAR(100),
     invoice_created_date DATETIME,
     invoice_completed_date DATETIME,
     invoice_details VARCHAR(max),
@@ -111,7 +111,7 @@ DROP TABLE dbo.TShopeeInvoiceStatus;
 
 CREATE TABLE dbo.TShopeeInvoiceStatus(
     invoice_status_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(100),
     detail_id INT,
 	CONSTRAINT invoice_status_id_pk PRIMARY KEY(invoice_status_id)
 );
@@ -121,7 +121,7 @@ DROP TABLE dbo.TShopeePaymentMethod;
 
 CREATE TABLE dbo.TShopeePaymentMethod(
     payment_method_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(100),
     detail_id INT,
 	CONSTRAINT payment_method_id_pk PRIMARY KEY(payment_method_id)
 );

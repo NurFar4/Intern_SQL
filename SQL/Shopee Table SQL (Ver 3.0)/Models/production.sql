@@ -3,7 +3,7 @@ DROP TABLE dbo.TShopeeStockWarehouse;
 
 CREATE TABLE dbo.TShopeeStockWarehouse(
     stock_warehouse_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
     email_address VARCHAR(50),
     phone_number VARCHAR(20),
     address_line_1 VARCHAR(50),
@@ -21,7 +21,7 @@ DROP TABLE dbo.TShopeeStockItem;
 
 CREATE TABLE dbo.TShopeeStockItem(
     stock_item_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(max),
     description VARCHAR(max),
     stock_quantity DECIMAL(10, 6),
     product_id INT,
@@ -36,7 +36,7 @@ DROP TABLE dbo.TShopeeProductBrand;
 CREATE TABLE dbo.TShopeeProductBrand(
     product_brand_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
-    code VARCHAR(20),
+    code VARCHAR(50),
     detail_id INT,
     CONSTRAINT product_brand_id_pk PRIMARY KEY(product_brand_id)
 );
@@ -47,7 +47,7 @@ DROP TABLE dbo.TShopeeProductCategory;
 CREATE TABLE dbo.TShopeeProductCategory(
     product_category_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
-    code VARCHAR(20),
+    code VARCHAR(50),
     detail_id INT,
     CONSTRAINT product_category_id_pk PRIMARY KEY(product_category_id)
 );
@@ -58,7 +58,7 @@ DROP TABLE dbo.TShopeeProductType;
 CREATE TABLE dbo.TShopeeProductType(
     product_type_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
-    code VARCHAR(20),
+    code VARCHAR(50),
     detail_id INT,
     CONSTRAINT product_type_id_pk PRIMARY KEY(product_type_id)
 );
@@ -69,7 +69,7 @@ DROP TABLE dbo.TShopeeProductModel;
 CREATE TABLE dbo.TShopeeProductModel(
     product_model_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
-    code VARCHAR(20),
+    code VARCHAR(50),
     detail_id INT,
     CONSTRAINT product_model_id_pk PRIMARY KEY(product_model_id)
 );
@@ -80,7 +80,7 @@ DROP TABLE dbo.TShopeeProductVariety;
 CREATE TABLE dbo.TShopeeProductVariety(
     product_variety_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
-    code VARCHAR(20),
+    code VARCHAR(50),
     detail_id INT,
     CONSTRAINT product_variety_id_pk PRIMARY KEY(product_variety_id)
 );
@@ -91,10 +91,10 @@ DROP TABLE dbo.TShopeeSupplier;
 CREATE TABLE dbo.TShopeeSupplier(
     supplier_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
-    code VARCHAR(20),
+    code VARCHAR(50),
     nation VARCHAR(20),
     poc_name VARCHAR(max),
-    poc_email VARCHAR(max),
+    poc_email VARCHAR(50),
     poc_phone_number VARCHAR(20),
     detail_id INT,
     CONSTRAINT supplier_id_pk PRIMARY KEY(supplier_id)
@@ -106,8 +106,8 @@ DROP TABLE dbo.TShopeeSupplierShipment;
 CREATE TABLE dbo.TShopeeSupplierShipment(
     supplier_shipment_id INT IDENTITY(1, 1) not null,
     received_date DATETIME,
-    supplier_tracking_id VARCHAR(max),
-    NTL_tracking_id VARCHAR(max),
+    supplier_tracking_id VARCHAR(50),
+    NTL_tracking_id VARCHAR(50),
     height DECIMAL(10, 6),
     width DECIMAL(10, 6),
     length DECIMAL(10, 6),
@@ -150,7 +150,7 @@ DROP TABLE dbo.TShopeeProductStatus;
 
 CREATE TABLE dbo.TShopeeProductStatus(
     product_status_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(max),
+    name VARCHAR(100),
     detail_id INT,
     CONSTRAINT product_status_id_pk PRIMARY KEY(product_status_id)
 );
@@ -174,7 +174,7 @@ CREATE TABLE dbo.TShopeeProduction(
     production_id INT IDENTITY(1, 1) not null,
     title VARCHAR(max),
     description VARCHAR(max),
-    staff_name VARCHAR(max),
+    staff_name VARCHAR(100),
     created_date DATETIME,
     total_usage DECIMAL(10, 6),
     production_status_id INT,
@@ -187,7 +187,7 @@ DROP TABLE dbo.TShopeeProductionStatus;
 
 CREATE TABLE dbo.TShopeeProductionStatus(
     production_status_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(50),
+    name VARCHAR(100),
     detail_id INT,
     CONSTRAINT production_status_id_pk PRIMARY KEY(production_status_id)
 );
@@ -210,18 +210,4 @@ CREATE TABLE dbo.TShopeeProductionDetail(
     product_id INT,
     detail_id INT,
     CONSTRAINT production_detail_id_pk PRIMARY KEY(production_detail_id)
-);
-
--- Detail Table
-DROP TABLE dbo.TShopeeDetail;
-
-CREATE TABLE dbo.TShopeeDetail(
-    detail_id INT IDENTITY(1, 1) not null,
-    status VARCHAR(max),
-    remark VARCHAR(max),
-    created_by VARCHAR(100),
-    created_date DATETIME,
-    last_updated_by VARCHAR(100),
-    last_updated_date DATETIME,
-    CONSTRAINT detail_id_pk PRIMARY KEY(detail_id)
 );
