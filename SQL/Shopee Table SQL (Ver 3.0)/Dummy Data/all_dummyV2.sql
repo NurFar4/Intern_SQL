@@ -35,11 +35,9 @@ DBCC CHECKIDENT (''?'', RESEED, 1)'
 
 EXEC NSP_TShopeeUser_Insert 'admin', 'IsYt3OjBNUJkhuWW0Di9CITKKSU/UaTXIAgvKhlJy5IXV7FbuNU+ZhyBkTUsQmSys1VMJvHzdlMS4wOgcMsuMw==', 'admin@gmail.com';
 EXEC NSP_TShopeeUser_Insert 'user', '35l+Ac+ZfCVeykmRBZr/J+7GaQGA35mCENCxbFy4/UFzQ9ta0qhL3CDNIpDySyik+8G2kJ/S9CW1xHzjbL1wHQ==', 'user@gmail.com';
-EXEC NSP_TShopeeUser_Insert 'txe1', 'hzDv95of++CINOU/MolX27766DGoHf1tEhtciIj6evZ0CcviQE8lg+bR6hhcVw/XLwsSJrlWxAMWkvmKB2Z47A==', 'txen2000@gmail.com';
 
 EXEC NSP_TShopeeUserRole_Insert 'user', 'User';
 EXEC NSP_TShopeeUserRole_Insert 'admin', 'Admin';
-EXEC NSP_TShopeeUserRole_Insert 'txe1', 'Admin';
 
 DECLARE @dt datetime = GETDATE();
 DECLARE @detail_id INT;
@@ -142,18 +140,6 @@ EXEC NSP_TShopeeDetail_Insert 'Product Category: Normal', 'Created by default wh
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeProductCategory_Insert 'Normal', 'Normal', @detail_id
 
-EXEC NSP_TShopeeDetail_Insert 'Product Category: Solid Color', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductCategory_Insert 'Solid Color', 'Solid Color', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Category: PPF', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductCategory_Insert 'PPF', 'PPF', @detail_id
-
-EXEC NSP_TShopeeDetail_Insert 'Product Category: Printable Color', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
-SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
-EXEC NSP_TShopeeProductCategory_Insert 'Printable Color', 'Printable Color', @detail_id
-
 -- Product Model
 EXEC NSP_TShopeeDetail_Insert 'Product Model: Normal', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
@@ -167,6 +153,14 @@ EXEC NSP_TShopeeProductModel_Insert 'Material', 'Material', @detail_id
 EXEC NSP_TShopeeDetail_Insert 'Product Type: Normal', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
 SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
 EXEC NSP_TShopeeProductType_Insert 'Normal', 'Normal', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Type: Solid Color', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductType_Insert 'Solid Color', 'Solid Color', @detail_id
+
+EXEC NSP_TShopeeDetail_Insert 'Product Type: Printable Color', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;
+SET @detail_id = (SELECT IDENT_CURRENT('TShopeeDetail'));
+EXEC NSP_TShopeeProductType_Insert 'Printable Color', 'Printable Color', @detail_id
 
 -- Product Variety
 EXEC NSP_TShopeeDetail_Insert 'Product Variety: Normal', 'Created by default when database is initialized', 'admin', @dt, 'admin', @dt;

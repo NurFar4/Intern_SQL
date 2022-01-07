@@ -163,6 +163,7 @@ CREATE TABLE dbo.TShopeeProductComponent(
     master_product_id INT,
     sub_product_id INT,
     quantity INT,
+    type_id INT,
     detail_id INT,
     CONSTRAINT product_component_id_pk PRIMARY KEY(product_component_id)
 );
