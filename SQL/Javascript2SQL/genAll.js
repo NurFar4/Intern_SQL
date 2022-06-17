@@ -32,11 +32,11 @@ const sql_dict = gen_sql_dict(sql_js_str);
 
 const table_arr = sql_js_str.match(/CREATE TABLE (.|\n)+?\);/g);
 
-const func_arr = [gen_select_all, gen_select_by_pk, gen_insert, gen_update, gen_delete];
-const comment_arr = ["Select All", "Select By PK", "Insert New Record", "Update Existing Record", "Delete Record"].map(x => `Stored Procedure: ${x}`);
+// const func_arr = [gen_select_all, gen_select_by_pk, gen_insert, gen_update, gen_delete];
+// const comment_arr = ["Select All", "Select By PK", "Insert New Record", "Update Existing Record", "Delete Record"].map(x => `Stored Procedure: ${x}`);
 
-// const func_arr = [gen_insert, gen_update, gen_delete];
-// const comment_arr = ["Insert New Record", "Update Existing Record", "Delete Record"].map(x => `Stored Procedure: ${x}`);
+const func_arr = [gen_insert, gen_update, gen_delete];
+const comment_arr = ["Insert New Record", "Update Existing Record", "Delete Record"].map(x => `Stored Procedure: ${x}`);
 
 // Lambda
 f = x => {
