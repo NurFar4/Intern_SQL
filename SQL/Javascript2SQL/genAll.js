@@ -40,7 +40,7 @@ const comment_arr = ["Insert New Record", "Update Existing Record", "Delete Reco
 
 // Lambda
 f = x => {
-    return x.split("TShopee")[1].replace(/([a-z])([A-Z])/g, '$1 $2');;
+    return x.split("TNtl")[1].replace(/([a-z])([A-Z])/g, '$1 $2');;
 };
 
 for (let ind in Object.keys(sql_dict)) {

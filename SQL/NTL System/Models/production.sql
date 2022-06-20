@@ -5,9 +5,25 @@ CREATE TABLE dbo.TNtlProduct(
     product_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
     description VARCHAR(max),
-    product_category_id INT,
-    product_subcategory_id INT,
+    SKU VARCHAR(50),
+    SKU2 VARCHAR(50),
+    buy_price DECIMAL(10, 2),
+    sell_price DECIMAL(10, 2),
     CONSTRAINT product_id_pk PRIMARY KEY(product_id)
+);
+
+-- Product Template Table (Intentionally Left Out)
+
+-- Product Variant Combination (Intentionally Left Out)
+
+-- Product Attribute Value Table
+DROP TABLE dbo.TNtlProductAttributeValue;
+
+CREATE TABLE dbo.TNtlProductAttributeValue(
+    product_attribute_value_id INT IDENTITY(1, 1) not null,
+    product_id INT,
+    attribute_value_id INT,
+    CONSTRAINT product_attribute_value_id PRIMARY KEY(product_attribute_value_id)
 );
 
 -- Product Component Table
@@ -21,72 +37,33 @@ CREATE TABLE dbo.TNtlProductComponent(
     CONSTRAINT product_component_id_pk PRIMARY KEY(product_component_id)
 );
 
--- Supplier Table
-DROP TABLE dbo.TNtlSupplier;
+-- Stock Warehouse
+DROP TABLE dbo.TNtlStockWarehouse;
 
-CREATE TABLE dbo.TNtlSupplier(
-    supplier_id INT IDENTITY(1, 1) not null,
+CREATE TABLE dbo.TNtlStockWarehouse(
+    stock_warehouse_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
-    code VARCHAR(max),
-    CONSTRAINT supplier_id_pk PRIMARY KEY(supplier_id)
+    email_address VARCHAR(50),
+    phone_number VARCHAR(20),
+    address_line_1 VARCHAR(50),
+    address_line_2 VARCHAR(50),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    zip_code INT,
+    country VARCHAR(20),
+    CONSTRAINT stock_warehouse_id_pk PRIMARY KEY(stock_warehouse_id)
 );
 
--- Supplier Shipment Table
-DROP TABLE dbo.TNtlSupplierShipment;
+-- Stock Item Table
+DROP TABLE dbo.TNtlStockItem;
 
-CREATE TABLE dbo.TNtlSupplierShipment(
-    supplier_shipment_id INT IDENTITY(1, 1) not null,
-    supplier_id INT,
-    product_id INT,
-    CONSTRAINT supplier_shipment_id_pk PRIMARY KEY(supplier_shipment_id)
-);
-
--- Product Attribute Value Table
-DROP TABLE dbo.TNtlProductAttributeValue;
-
-CREATE TABLE dbo.TNtlProductAttributeValue(
-    product_attribute_value_id INT IDENTITY(1, 1) not null,
-    attribute_value_id INT,
-    product_id INT,
-    description VARCHAR(max),
-    CONSTRAINT product_attribute_value_id_pk PRIMARY KEY(product_attribute_value_id)
-);
-
--- Attribute Table
-DROP TABLE dbo.TNtlAttribute;
-
-CREATE TABLE dbo.TNtlAttribute(
-    attribute_id INT IDENTITY(1, 1) not null,
+CREATE TABLE dbo.TNtlStockItem(
+    stock_item_id INT IDENTITY(1, 1) not null,
     name VARCHAR(max),
     description VARCHAR(max),
-    CONSTRAINT attribute_id_pk PRIMARY KEY(attribute_id)
-);
-
--- Attribute Value Table
-DROP TABLE dbo.TNtlAttributeValue;
-
-CREATE TABLE dbo.TNtlAttributeValue(
-    attribute_value_id INT IDENTITY(1, 1) not null,
-    attribute_id INT,
-    name VARCHAR(max),
-    CONSTRAINT attribute_value_id_pk PRIMARY KEY(attribute_value_id)
-);
-
--- Product Category Table
-DROP TABLE dbo.TNtlProductCategory;
-
-CREATE TABLE dbo.TNtlProductCategory(
-    product_category_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(max),
-    CONSTRAINT product_category_id_pk PRIMARY KEY(product_category_id)
-);
-
--- Product SubCategory Table
-DROP TABLE dbo.TNtlProductSubcategory;
-
-CREATE TABLE dbo.TNtlProductSubcategory(
-    product_subcategory_id INT IDENTITY(1, 1) not null,
-    product_category_id INT,
-    name VARCHAR(max),
-    CONSTRAINT product_subcategory_id_pk PRIMARY KEY(product_subcategory_id)
+    quantity DECIMAL(10, 6),
+    product_id INT,
+    uom_id INT,
+    stock_warehouse_id INT,
+    CONSTRAINT stock_item_id_pk PRIMARY KEY(stock_item_id)
 );
