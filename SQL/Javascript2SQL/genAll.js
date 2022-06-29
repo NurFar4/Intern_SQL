@@ -10,12 +10,26 @@ let fileNameArr = ["production", "operation", "shipment"];
 fileNameArr = fileNameArr.map(x => `${x}.sql`);
 
 // const sql_js_str = genSqlStrArr(fileNameDir, fileNameArr);
-const sql_js_str = `DROP TABLE dbo.tblMovie;
+const sql_js_str = `-- Job Order Item Table
+DROP TABLE dbo.TNtlJobOrderItem;
 
-CREATE TABLE dbo.tblMovie(
-    id INT IDENTITY(1, 1),
-    name VARCHAR(MAX),
-    CONSTRAINT movie_id_pk PRIMARY KEY (id)  
+CREATE TABLE dbo.TNtlJobOrderItem(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(max),
+    sku VARCHAR(50),
+    uom VARCHAR(50),
+    unit_price DECIMAL(10, 6),
+    quantity DECIMAL(10, 6),
+    length DECIMAL(10, 6),
+    width DECIMAL(10, 6),
+    height DECIMAL(10, 6),
+    sub_total_price DECIMAL(10, 6),
+    discount_fee DECIMAL(10, 6),
+    tax_price DECIMAL(10, 6),
+    total_price DECIMAL(10, 6),
+    order_id INT,
+    detail_id INT,
+    CONSTRAINT job_order_item_id_pk PRIMARY KEY (id)
 );`.replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
 .replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");;
 

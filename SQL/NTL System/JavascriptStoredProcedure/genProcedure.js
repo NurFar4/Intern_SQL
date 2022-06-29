@@ -62,14 +62,21 @@ DROP TABLE dbo.TNtlJobOrderItem;
 
 CREATE TABLE dbo.TNtlJobOrderItem(
     id INT IDENTITY(1, 1) not null,
-    name VARCHAR(100),
+    name VARCHAR(max),
+    sku VARCHAR(50),
+    uom VARCHAR(50),
+    unit_price DECIMAL(10, 6),
     quantity DECIMAL(10, 6),
-    uom_id INT,
-    job_order_id INT,
-    order_item_id INT,
-    product_id INT,
+    length DECIMAL(10, 6),
+    width DECIMAL(10, 6),
+    height DECIMAL(10, 6),
+    sub_total_price DECIMAL(10, 6),
+    discount_fee DECIMAL(10, 6),
+    tax_price DECIMAL(10, 6),
+    total_price DECIMAL(10, 6),
+    order_id INT,
     detail_id INT,
-    CONSTRAINT job_order_item_id_pk PRIMARY KEY(id)
+    CONSTRAINT job_order_item_id_pk PRIMARY KEY (id)
 );`;
 
 let table_stmt_arr = str.match(/CREATE(.|\n)+?\);/g);

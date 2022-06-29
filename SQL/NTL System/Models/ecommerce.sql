@@ -115,37 +115,6 @@ CREATE TABLE dbo.TNtlPaymentMethod(
     detail_id INT,
 	CONSTRAINT payment_method_id_pk PRIMARY KEY (id)
 );
-
--- Job Order Table (Create as a View)
-DROP TABLE dbo.TNtlJobOrder;
-
-CREATE TABLE dbo.TNtlJobOrder(
-    id INT IDENTITY(1, 1) not null,
-    name VARCHAR(100),
-    description VARCHAR(max),
-    created_date DATETIME,
-    completed_date DATETIME,
-    order_id INT,
-    status_id INT,
-    detail_id INT,
-    CONSTRAINT job_order_id_pk PRIMARY KEY(id)
-);
-
--- Job Order Item Table
-DROP TABLE dbo.TNtlJobOrderItem;
-
-CREATE TABLE dbo.TNtlJobOrderItem(
-    id INT IDENTITY(1, 1) not null,
-    name VARCHAR(100),
-    quantity DECIMAL(10, 6),
-    uom_id INT,
-    job_order_id INT,
-    order_item_id INT,
-    product_id INT,
-    detail_id INT,
-    CONSTRAINT job_order_item_id_pk PRIMARY KEY(id)
-);
-
 -- Voucher Table
 DROP TABLE dbo.TNtlVoucher;
 
