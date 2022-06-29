@@ -1,21 +1,23 @@
 // Concat SQL Code into Javascript String
 
-const gen_sql_str = require("./genSqlStr");
+const {genSqlStr, genSqlStrArr} = require("./genSqlStr");
 
 // Generate Sql Statement String
 const path = require('path');
 let fileNameDir = path.join(__dirname, '..', 'NTL System', 'Models');
-const sql_js_str = gen_sql_str(fileNameDir);
 
-// const sql_js_str = `
-// DROP TABLE dbo.tblMovie;
+let fileNameArr = ["production", "operation", "shipment"];
+fileNameArr = fileNameArr.map(x => `${x}.sql`);
 
-// CREATE TABLE dbo.tblMovie(
-//     movie_id INT IDENTITY(1, 1),
-//     name VARCHAR(MAX),
-//     CONSTRAINT movie_id_pk PRIMARY KEY (movie_id)  
-// );
-// `;
+// const sql_js_str = genSqlStrArr(fileNameDir, fileNameArr);
+const sql_js_str = `DROP TABLE dbo.tblMovie;
+
+CREATE TABLE dbo.tblMovie(
+    id INT IDENTITY(1, 1),
+    name VARCHAR(MAX),
+    CONSTRAINT movie_id_pk PRIMARY KEY (id)  
+);`.replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
+.replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");;
 
 // Generate Dictionary
 const gen_sql_dict = require("./genSqlDict");
@@ -50,6 +52,8 @@ for (let ind in Object.keys(sql_dict)) {
     let arr = sql_dict[table_name];
 
     // console.log(`${+ind + 1}. ${f(table_name)}`);
+
+    console.log(`DROP TABLE ${table_name};`);
 
     console.log(table_stmt);
 

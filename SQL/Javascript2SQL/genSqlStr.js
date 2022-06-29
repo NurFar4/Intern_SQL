@@ -33,6 +33,16 @@ function genSqlStr(fileNameDir) {
     .replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");
 }
 
-module.exports = function (fileNameDir) {
-    return genSqlStr(fileNameDir);
+function genSqlStrFromArr(fileNameDir, arr){
+    const final_str_arr = arr.map(fileName => readFile(path.join(fileNameDir, fileName)));
+    return final_str_arr.join("\r\n")
+    .split("\r\n")
+    .join("\n")
+    .replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
+    .replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");
+}
+
+module.exports =  {
+    "genSqlStr": genSqlStr,
+    "genSqlStrArr": genSqlStrFromArr
 };

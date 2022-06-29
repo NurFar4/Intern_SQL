@@ -1,71 +1,78 @@
+-- Platform Table
+DROP TABLE dbo.TNtlPlatform;
+
+CREATE TABLE dbo.TNtlPlatform(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(100),
+    link VARCHAR(100),
+    detail_id INT,
+    CONSTRAINT platform_id_pk PRIMARY KEY(id)
+);
+
 -- Customer Table
 DROP TABLE dbo.TNtlCustomer;
 
 CREATE TABLE dbo.TNtlCustomer(
-    customer_id INT IDENTITY(1, 1) not null,
-    name VARCHAR(max)
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(max),
+    email_address VARCHAR(50),
+    phone_number VARCHAR(50),
     address_line_1 VARCHAR(50),
     address_line_2 VARCHAR(50),
     city VARCHAR(50),
     state VARCHAR(50),
     zip_code INT,
     country VARCHAR(20),
-	CONSTRAINT customer_id_pk PRIMARY KEY(customer_id)
+    platform_id INT,
+    detail_id INT,
+	CONSTRAINT customer_id_pk PRIMARY KEY(id)
 );
+
+-- Quotation Table
 
 -- Order Table
 DROP TABLE dbo.TNtlOrder;
 
 CREATE TABLE dbo.TNtlOrder(
-    order_id INT IDENTITY(1,1) not null,
-    order_title VARCHAR(max),
-    order_placed_date DATETIME,
-    total_price DECIMAL(10,2),
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(max),
+    code VARCHAR(50),
+    created_date DATETIME,
+    sub_total_price DECIMAL(10, 6),
+    tax_price DECIMAL(10, 6),
+    discount_fee DECIMAL(10, 6),
+    total_price DECIMAL(10, 6),
+    voucher_no VARCHAR(50),
+    odoo_sales_no VARCHAR(50),
+    external_ref_no VARCHAR(50),
     status_id INT,
-	CONSTRAINT order_id_pk PRIMARY KEY(order_id)
+    customer_id INT,
+    remark VARCHAR(max),
+    detail_id INT,
+	CONSTRAINT order_id_pk PRIMARY KEY(id)
 );
 
 -- Order Item Table
 DROP TABLE dbo.TNtlOrderItem;
 
 CREATE TABLE dbo.TNtlOrderItem(
-    order_item_id INT IDENTITY(1, 1) not null,
-    sub_total DECIMAL(10, 2),
-    discount_fee DECIMAL(10, 2),
+    id INT IDENTITY(1, 1) not null,
+    unit_price DECIMAL(10, 6),
+    quantity DECIMAL(10, 6),
+    sub_total_price DECIMAL(10, 6),
+    tax_price DECIMAL(10, 6),
+    discount_fee DECIMAL(10, 6),
+    total_price DECIMAL(10, 6),
+    voucher_no VARCHAR(50),
     order_id INT,
     product_id INT,
     uom_id INT,
-    quantity DECIMAL(10, 6),
-	CONSTRAINT order_item_id_pk PRIMARY KEY(order_item_id)
+    remark VARCHAR(max),
+    detail_id INT,
+	CONSTRAINT order_item_id_pk PRIMARY KEY(id)
 );
 
--- Job Order Table
-DROP TABLE dbo.TNtlJobOrder;
-
-CREATE TABLE dbo.TNtlJobOrder(
-    job_order_id INT IDENTITY(1, 1) not null,
-    title VARCHAR(100),
-    description VARCHAR(max),
-    created_date DATETIME,
-    status_id INT,
-    CONSTRAINT job_order_id_pk PRIMARY KEY(job_order_id_pk)
-);
-
--- Job Order Item Table
-DROP TABLE dbo.TNtlJobOrderItem;
-
-CREATE TABLE dbo.TNtlJobOrderItem(
-    job_order_item_id INT IDENTITY(1, 1) not null,
-    title VARCHAR(100),
-    order_item_id INT,
-    product_id INT,
-    uom_id INT,
-    quantity_needed DECIMAL(10, 6),
-    quantity_made DECIMAL(10, 6),
-    quantity_left DECIMAL(10, 6),
-    job_order_id INT,
-    CONSTRAINT job_order_item_id_pk PRIMARY KEY(job_order_item_id)
-);
+-- Order Item Refund Status Table (Intentionally Left Out)
 
 -- Invoice Table
 -- Created is when payment is complete
@@ -77,19 +84,98 @@ CREATE TABLE dbo.TNtlJobOrderItem(
 DROP TABLE dbo.TNtlInvoice;
 
 CREATE TABLE dbo.TNtlInvoice(
-    invoice_id INT IDENTITY(1, 1) not null,
-    invoice_title VARCHAR(100),
-    invoice_created_date DATETIME,
-    invoice_completed_date DATETIME,
-    invoice_details VARCHAR(max),
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(100),
+    code VARCHAR(100),
+    details VARCHAR(max),
+    created_date DATETIME,
+    completed_date DATETIME,
     shipping_fee DECIMAL(10, 2),
+    customer_address_line_1 VARCHAR(50),
+    customer_address_line_2 VARCHAR(50),
+    customer_city VARCHAR(50),
+    customer_state VARCHAR(50),
+    customer_zip_code INT,
+    customer_country VARCHAR(20),
+    payment_method_id INT,
     status_id INT,
+    customer_id INT,
     order_id INT,
-	CONSTRAINT invoice_id_pk PRIMARY KEY(invoice_id)
+    remark VARCHAR(max),
+    detail_id INT,
+	CONSTRAINT invoice_id_pk PRIMARY KEY (id)
 );
 
 -- Payment Method Table (Intentionally Left Out)
+DROP TABLE dbo.TNtlPaymentMethod;
 
--- Country Table (Intentionally Left Out)
+CREATE TABLE dbo.TNtlPaymentMethod(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(100),
+    detail_id INT,
+	CONSTRAINT payment_method_id_pk PRIMARY KEY (id)
+);
 
--- State Table (Intentionally Left Out)
+-- Job Order Table (Create as a View)
+DROP TABLE dbo.TNtlJobOrder;
+
+CREATE TABLE dbo.TNtlJobOrder(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(100),
+    description VARCHAR(max),
+    created_date DATETIME,
+    completed_date DATETIME,
+    order_id INT,
+    status_id INT,
+    detail_id INT,
+    CONSTRAINT job_order_id_pk PRIMARY KEY(id)
+);
+
+-- Job Order Item Table
+DROP TABLE dbo.TNtlJobOrderItem;
+
+CREATE TABLE dbo.TNtlJobOrderItem(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(100),
+    quantity DECIMAL(10, 6),
+    uom_id INT,
+    job_order_id INT,
+    order_item_id INT,
+    product_id INT,
+    detail_id INT,
+    CONSTRAINT job_order_item_id_pk PRIMARY KEY(id)
+);
+
+-- Voucher Table
+DROP TABLE dbo.TNtlVoucher;
+
+CREATE TABLE dbo.TNtlVoucher(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(100),
+    code VARCHAR(50),
+    description VARCHAR(max),
+    discount_fee DECIMAL(10, 6),
+    start_date DATETIME,
+    expiry_date DATETIME,
+    CONSTRAINT voucher_id_pk PRIMARY KEY (id)
+);
+
+-- Product Voucher Table
+DROP TABLE dbo.TNtlProductVoucher;
+
+CREATE TABLE dbo.TNtlProductVoucher(
+    id INT IDENTITY(1, 1) not null,
+    voucher_id INT,
+    product_id INT,
+    CONSTRAINT product_voucher_id_pk PRIMARY KEY (id)
+);
+
+-- Customer Voucher Table
+DROP TABLE dbo.TNtlCustomerVoucher;
+
+CREATE TABLE dbo.TNtlCustomerVoucher(
+    id INT IDENTITY(1, 1) not null,
+    voucher_id INT,
+    customer_id INT,
+    CONSTRAINT customer_voucher_id_pk PRIMARY KEY (id)
+);
