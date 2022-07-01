@@ -92,7 +92,7 @@ ORDER BY id, no;
 
 -- Job Order Item Listing
 CREATE OR REPLACE VIEW VNtlJobOrderItem AS 
-	SELECT b.id "id", b.name "item_description", b.name "name", b.product_uom_qty "quantity",c.name "uom", b.price_unit "unit_price", b.price_tax "tax_price", b.price_total "total_price", b.order_id "order_id"
+	SELECT b.id "id", b.name "item_description", b.product_uom_qty "quantity",c.name "uom", b.price_unit "unit_price", b.price_tax "tax_price", b.price_total "total_price", b.order_id "order_id"
 	FROM public.sale_order a 
 	INNER JOIN public.sale_order_line b 
 	ON a.id = b.order_id

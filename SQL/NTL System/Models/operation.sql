@@ -60,7 +60,6 @@ CREATE TABLE dbo.TNtlUser(
     username VARCHAR(max),
     password VARCHAR(max),
     email_address VARCHAR(max),
-    detail_id INT,
     CONSTRAINT user_id_pk PRIMARY KEY (id)
 );
 
@@ -70,7 +69,6 @@ DROP TABLE dbo.TNtlRole;
 CREATE TABLE dbo.TNtlRole(
     id INT IDENTITY(1, 1) not null,
     name VARCHAR(100),
-    detail_id INT,
     CONSTRAINT role_id_pk PRIMARY KEY (id)
 );
 
@@ -81,6 +79,5 @@ CREATE TABLE dbo.TNtlUserRole(
     id INT IDENTITY(1, 1) not null,
     user_id INT,
     role_id INT,
-    detail_id INT,
     CONSTRAINT user_role_id_pk PRIMARY KEY (id)
 );
