@@ -81,3 +81,25 @@ CREATE TABLE dbo.TNtlUserRole(
     role_id INT,
     CONSTRAINT user_role_id_pk PRIMARY KEY (id)
 );
+
+-- Permission Table
+DROP TABLE dbo.TNtlPermission;
+
+CREATE TABLE dbo.TNtlPermission(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(100),
+    CONSTRAINT permission_id_pk PRIMARY KEY (id)
+);
+
+-- Role Permission Table
+DROP TABLE dbo.TNtlRolePermission;
+
+CREATE TABLE dbo.TNtlRolePermission(
+    id INT IDENTITY(1, 1) not null,
+    role_id INT,
+    permission_id INT,
+    CONSTRAINT role_permission_id_pk PRIMARY KEY (id)
+);
+
+-- Support Ticket Table
+

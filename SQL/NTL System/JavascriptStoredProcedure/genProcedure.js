@@ -57,24 +57,17 @@ function genParameter(tableName, prop) {
     return prop.map(x => `item.${x} = (item.${x} == null) ? "${tableName}_${x}" : item.${x};`).join("\n");
 }
 
-let str = `-- Products Table
-DROP TABLE dbo.TNtlProduct;
-
-CREATE TABLE dbo.TNtlProduct(
+let str = `
+CREATE TABLE dbo.TNtlSeleniumLog(
     id INT IDENTITY(1, 1) not null,
-    name VARCHAR(max),
-    description VARCHAR(max),
-    SKU VARCHAR(50),
-    SKU2 VARCHAR(50),
-    buy_price DECIMAL(10, 2),
-    sell_price DECIMAL(10, 2),
-    product_category_id INT,
-    product_sub_category_id INT,
-    uom_id INT,
-    remarks VARCHAR(100),
-    detail_id INT,
-    CONSTRAINT product_id_pk PRIMARY KEY(id)
-);`;
+    log_name VARCHAR(100),
+    start_date DATETIME,
+    end_date DATETIME,
+    status VARCHAR(20),
+    remarks VARCHAR(max),
+    CONSTRAINT selenium_log_id_pk PRIMARY KEY (id)
+);
+`;
 
 let table_stmt_arr = str.match(/CREATE(.|\n)+?\);/g);
 
@@ -95,4 +88,5 @@ table_stmt_arr.forEach(table_stmt => {
     console.log(genInsert(tableName, prop));
     console.log(genUpdate(tableName, prop));
     console.log(genDelete(tableName));
+    // console.log(prop.map(x => `${tableName.toLowerCase()}.${x} = "";`).join("\n"));
 });

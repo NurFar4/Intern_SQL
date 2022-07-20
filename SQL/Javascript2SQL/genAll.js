@@ -10,25 +10,19 @@ let fileNameArr = ["production", "operation", "shipment"];
 fileNameArr = fileNameArr.map(x => `${x}.sql`);
 
 // const sql_js_str = genSqlStrArr(fileNameDir, fileNameArr);
-const sql_js_str = `-- Products Table
-DROP TABLE dbo.TNtlProduct;
-
-CREATE TABLE dbo.TNtlProduct(
+const sql_js_str = `
+CREATE TABLE dbo.TNtlSeleniumLog(
     id INT IDENTITY(1, 1) not null,
-    name VARCHAR(max),
-    description VARCHAR(max),
-    SKU VARCHAR(50),
-    SKU2 VARCHAR(50),
-    buy_price DECIMAL(10, 2),
-    sell_price DECIMAL(10, 2),
-    product_category_id INT,
-    product_sub_category_id INT,
-    uom_id INT,
-    remarks VARCHAR(100),
-    detail_id INT,
-    CONSTRAINT product_id_pk PRIMARY KEY(id)
-);`.replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
-.replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");;
+    log_name VARCHAR(100),
+    start_date DATETIME,
+    end_date DATETIME,
+    status VARCHAR(20),
+    remarks VARCHAR(max),
+    CONSTRAINT selenium_log_id_pk PRIMARY KEY (id)
+);
+`
+.replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
+.replace(/IDENTITY\(1, 1\)/g, "IDENTITY(1,1)");
 
 // Generate Dictionary
 const gen_sql_dict = require("./genSqlDict");

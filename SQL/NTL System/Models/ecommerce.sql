@@ -17,15 +17,27 @@ CREATE TABLE dbo.TNtlCustomer(
     name VARCHAR(max),
     email_address VARCHAR(50),
     phone_number VARCHAR(50),
-    address_line_1 VARCHAR(50),
-    address_line_2 VARCHAR(50),
-    city VARCHAR(50),
-    state VARCHAR(50),
-    zip_code INT,
-    country VARCHAR(20),
+    address VARCHAR(max),
     platform_id INT,
     detail_id INT,
 	CONSTRAINT customer_id_pk PRIMARY KEY(id)
+);
+
+-- Customer Chat Table
+DROP TABLE dbo.TNtlCustomerChat;
+
+CREATE TABLE dbo.TNtlCustomerChat(
+    id INT IDENTITY(1, 1) not null,
+    message VARCHAR(max),
+    created_date DATETIME,
+    msg_type VARCHAR(50),
+    sender_type VARCHAR(50),
+    customer_id INT,
+    user_id INT,
+    read_status_id INT,
+    send_status_id INT,
+    platform_id INT,
+    CONSTRAINT customer_chat_id_pk PRIMARY KEY(id)
 );
 
 -- Quotation Table
@@ -57,6 +69,8 @@ DROP TABLE dbo.TNtlOrderItem;
 
 CREATE TABLE dbo.TNtlOrderItem(
     id INT IDENTITY(1, 1) not null,
+    name VARCHAR(50),
+    sku VARCHAR(50),
     unit_price DECIMAL(10, 6),
     quantity DECIMAL(10, 6),
     sub_total_price DECIMAL(10, 6),
