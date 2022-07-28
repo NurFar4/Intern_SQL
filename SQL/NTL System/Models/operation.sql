@@ -34,6 +34,7 @@ DROP TABLE dbo.TNtlStatus;
 CREATE TABLE dbo.TNtlStatus(
     id INT IDENTITY(1, 1) not null,
     name VARCHAR(50),
+    type VARCHAR(100),
     detail_id INT,
     CONSTRAINT status_id_pk PRIMARY KEY(id)
 );

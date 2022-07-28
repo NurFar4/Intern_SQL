@@ -4,6 +4,7 @@ DROP TABLE dbo.TNtlSeleniumLog;
 CREATE TABLE dbo.TNtlSeleniumLog(
     id INT IDENTITY(1, 1) not null,
     log_name VARCHAR(100),
+    type INT,    
     start_date DATETIME,
     end_date DATETIME,
     status VARCHAR(20),

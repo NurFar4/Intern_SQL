@@ -35,6 +35,7 @@ CREATE TABLE dbo.TNtlJobOrder(
     customer_state VARCHAR(100),
     customer_country VARCHAR(100),
     odoo_sales_id INT,
+    odoo_status_id INT,
     status_id INT,
     batch_id INT,
     detail_id INT,
@@ -61,6 +62,24 @@ CREATE TABLE dbo.TNtlJobOrderItem(
     order_id INT,
     detail_id INT,
     CONSTRAINT job_order_item_id_pk PRIMARY KEY (id)
+);
+
+-- Summary Listing Table
+DROP TABLE dbo.TNtlSummaryItem;
+
+CREATE TABLE dbo.TNtlSummaryItem(
+    id INT IDENTITY(1, 1) not null,
+    name VARCHAR(max),
+    sku VARCHAR(50),
+    quantity DECIMAL(10, 6),
+    length DECIMAL(10, 6),
+    width DECIMAL(10, 6),
+    height DECIMAL(10, 6),
+    created_date DATETIME,
+    completed_date DATETIME,
+    status_id INT,
+    detail_id INT,
+    CONSTRAINT summary_item_id_pk PRIMARY KEY (id)
 );
 
 DELETE FROM dbo.TNtlJobBatch;

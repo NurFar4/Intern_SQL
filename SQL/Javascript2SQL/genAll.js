@@ -11,14 +11,28 @@ fileNameArr = fileNameArr.map(x => `${x}.sql`);
 
 // const sql_js_str = genSqlStrArr(fileNameDir, fileNameArr);
 const sql_js_str = `
-CREATE TABLE dbo.TNtlSeleniumLog(
+-- Order Item Table
+DROP TABLE dbo.TNtlOrderItem;
+
+CREATE TABLE dbo.TNtlOrderItem(
     id INT IDENTITY(1, 1) not null,
-    log_name VARCHAR(100),
-    start_date DATETIME,
-    end_date DATETIME,
-    status VARCHAR(20),
-    remarks VARCHAR(max),
-    CONSTRAINT selenium_log_id_pk PRIMARY KEY (id)
+    name VARCHAR(50),
+    sku VARCHAR(50),
+    unit_price DECIMAL(10, 6),
+    quantity DECIMAL(10, 6),
+    sub_total_price DECIMAL(10, 6),
+    tax_price DECIMAL(10, 6),
+    discount_fee DECIMAL(10, 6),
+    total_price DECIMAL(10, 6),
+    voucher_no VARCHAR(50),
+    order_id INT,
+    product_id INT,
+    unit_id INT,
+    total_usage DECIMAL(10, 6),
+    uom_id INT,
+    remark VARCHAR(max),
+    detail_id INT,
+	CONSTRAINT order_item_id_pk PRIMARY KEY(id)
 );
 `
 .replace(/DECIMAL\(10, (\d)\)/g, "DECIMAL(10,$1)")
@@ -47,7 +61,7 @@ const comment_arr = ["Insert New Record", "Update Existing Record", "Delete Reco
 
 // Lambda
 f = x => {
-    return x.split("TNtl")[1].replace(/([a-z])([A-Z])/g, '$1 $2');;
+    return x.split("TNtl")[1].replace(/([a-z])([A-Z])/g, '$1 $2');
 };
 
 for (let ind in Object.keys(sql_dict)) {

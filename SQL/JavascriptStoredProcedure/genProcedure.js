@@ -58,14 +58,18 @@ function genParameter(tableName, prop) {
 }
 
 let str = `
-CREATE TABLE dbo.TNtlSeleniumLog(
+-- Unit Table
+DROP TABLE dbo.TNtlUnit;
+
+CREATE TABLE dbo.TNtlUnit(
     id INT IDENTITY(1, 1) not null,
-    log_name VARCHAR(100),
-    start_date DATETIME,
-    end_date DATETIME,
-    status VARCHAR(20),
-    remarks VARCHAR(max),
-    CONSTRAINT selenium_log_id_pk PRIMARY KEY (id)
+    name VARCHAR(max),
+    unit_type_id INT,
+    master_unit_id INT,
+    quantity INT,
+    total_usage DECIMAL(10, 6),
+    detail_id INT,
+    CONSTRAINT unit_id_pk PRIMARY KEY (id)
 );
 `;
 
