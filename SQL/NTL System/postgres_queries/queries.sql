@@ -99,10 +99,8 @@ CREATE OR REPLACE VIEW VNtlJobOrderItem AS
     LEFT JOIN public.uom_uom c
 	ON b.product_uom = c.id
 	WHERE 1 = 1
-    AND a.invoice_status NOT IN ('invoiced', 'no')
 	ORDER BY b.id;
 
-SELECT * FROM VNtlJobOrderItem WHERE ItemDescription LIKE '%|%';
 
 -- Customer Listing
 CREATE OR REPLACE VIEW VNtlCustomer AS
@@ -114,10 +112,8 @@ CREATE OR REPLACE VIEW VNtlCustomer AS
     ON c.state_id = d.id 
     LEFT JOIN public.res_country e 
     ON c.country_id = e.id
-    WHERE 1 = 1
-    AND a.invoice_status NOT IN ('invoiced', 'no');
+    WHERE 1 = 1;
 
-SELECT * FROM VNtlCustomer;
 
 -- Job Order Listing
 CREATE OR REPLACE VIEW VNtlJobOrder AS
@@ -129,8 +125,9 @@ CREATE OR REPLACE VIEW VNtlJobOrder AS
     ON c.state_id = d.id 
     LEFT JOIN public.res_country e 
     ON c.country_id = e.id
-    WHERE 1 = 1
-    AND a.invoice_status NOT IN ('invoiced', 'no');
+    WHERE 1 = 1;
 
+SELECT * FROM VNtlCustomer;
+SELECT * FROM VNtlJobOrderItem WHERE item_description LIKE '%|%';
 SELECT * FROM VNtlJobOrder;
 
