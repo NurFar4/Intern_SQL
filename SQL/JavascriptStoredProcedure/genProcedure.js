@@ -10,45 +10,45 @@ function genPropString(prop) {
     return prop.map((x, ind) => (ind > 0) ? `modelItem.${x} = item.${x};` : `modelItem.${x} = item.${x};`).join("\n");
 }
 
-function genInsert(tableName, prop) {
+function genInsert(tableType, tableName, prop) {
     return `
-    public static void ${tableName}Insert(TNtl${checkLastS(tableName)} item, string username)
+    public static void ${tableName}Insert(${tableType}${checkLastS(tableName)} item, string username)
     {
         DetailInsert($"${tableName}: {item.${prop[1]}}", "", username, username);
-        item.detail_id = GetID("TNtlDetail");
+        item.detail_id = GetID("${tableType}Detail");
 
-        db.NSP_TNtl${tableName}_Insert(${prop.slice(1).map(x => `item.${x}`).join(", ")});
+        db.NSP_${tableType}${tableName}_Insert(${prop.slice(1).map(x => `item.${x}`).join(", ")});
         db.SaveChanges();
     }`.replace(/[ ]{2,}/g, "");
 }
 
-function genUpdate(tableName, prop) {
+function genUpdate(tableType, tableName, prop) {
     return `
-    public static void ${tableName}Update(TNtl${checkLastS(tableName)} item, string username)
+    public static void ${tableName}Update(${tableType}${checkLastS(tableName)} item, string username)
     {
-        var modelItem = db.TNtl${checkLastS(tableName)}s.Find(item.id);
+        var modelItem = db.${tableType}${checkLastS(tableName)}s.Find(item.id);
 
         item.detail_id = (int) modelItem.detail_id;
-        TNtlDetail detail = db.TNtlDetails.FirstOrDefault(it => it.id == item.detail_id);
+        ${tableType}Detail detail = db.${tableType}Details.FirstOrDefault(it => it.id == item.detail_id);
         detail.name = $"${tableName}: {item.${prop[1]}}";
 
         DetailUpdate(detail.id, detail.name, detail.remark, detail.created_by, detail.created_date, username);
 
-        db.NSP_TNtl${tableName}_Update(${prop.map(x => `item.${x}`).join(", ")});
+        db.NSP_${tableType}${tableName}_Update(${prop.map(x => `item.${x}`).join(", ")});
         db.SaveChanges();
     }`.replace(/[ ]{2,}/g, "");
 }
 
-function genDelete(tableName) {
+function genDelete(tableType, tableName) {
     return `
     public static void ${tableName}Delete(int id)
     {
-        var modelItem = db.TNtl${checkLastS(tableName)}s.Find(id);
+        var modelItem = db.${tableType}${checkLastS(tableName)}s.Find(id);
 
         int detail_id = (int) modelItem.detail_id;
         DetailDelete(detail_id);
 
-        db.NSP_TNtl${tableName}_Delete(id);
+        db.NSP_${tableType}${tableName}_Delete(id);
         db.SaveChanges();
     }`.replace(/[ ]{2,}/g, "");
 }
@@ -58,29 +58,34 @@ function genParameter(tableName, prop) {
 }
 
 let str = `
--- Unit Table
-DROP TABLE dbo.TNtlUnit;
+-- Team Table
+DROP TABLE dbo.THelpDeskTeam;
 
-CREATE TABLE dbo.TNtlUnit(
+CREATE TABLE dbo.THelpDeskTeam(
     id INT IDENTITY(1, 1) not null,
-    name VARCHAR(max),
-    unit_type_id INT,
-    master_unit_id INT,
-    quantity INT,
-    total_usage DECIMAL(10, 6),
-    detail_id INT,
-    CONSTRAINT unit_id_pk PRIMARY KEY (id)
+    name VARCHAR(100),
+    team_member_id INT,
+    status_id INT,
+    remark VARCHAR(max),
+    created_by VARCHAR(100),
+    created_date DATETIME,
+    last_updated_by VARCHAR(100),
+    last_updated_date DATETIME,
+    CONSTRAINT team_id_pk PRIMARY KEY (id)
 );
 `;
 
 let table_stmt_arr = str.match(/CREATE(.|\n)+?\);/g);
 
 table_stmt_arr.forEach(table_stmt => {
-    let tableName = table_stmt.replace(/CREATE.*dbo\.(.*)\((.*|\n)*\);/, "$1");
+    let table = table_stmt.replace(/CREATE.*dbo\.(.*)\((.*|\n)*\);/, "$1");
 
     // Remove "TNtl"
-    tableName = tableName.slice(4);
+    // Remove "THelpDesk"
+    let tableName = table.replace(/(T(Ntl|HelpDesk))(.*)(.*)/g, "$3");
 
+    let tableType = table.replace(/(T(Ntl|HelpDesk))(.*)(.*)/g, "$1");
+    
     let prop = table_stmt.match(/\s([a-z_]*).*,\n/g);
 
     prop = prop.map(x => x.replace(/(\n|[ ]+)/g, " "));
@@ -89,8 +94,8 @@ table_stmt_arr.forEach(table_stmt => {
 
     prop = prop.map(x => x.split(" ")[0]);
 
-    console.log(genInsert(tableName, prop));
-    console.log(genUpdate(tableName, prop));
-    console.log(genDelete(tableName));
+    console.log(genInsert(tableType, tableName, prop));
+    console.log(genUpdate(tableType, tableName, prop));
+    console.log(genDelete(tableType, tableName));
     // console.log(prop.map(x => `${tableName.toLowerCase()}.${x} = "";`).join("\n"));
 });
